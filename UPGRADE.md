@@ -49,17 +49,17 @@ How to install:
  7. Reenable deliveries:
        # csh -cf '/var/qmail/rc &'
 
- 8. Read TEST.deliver.
+ 8. Read TEST.deliver.md.
 
  9. Reenable SMTP service by restoring the smtp line in inetd.conf; kill
     -HUP your inetd. (If you are using tcpserver, simply kill -CONT your
     tcpserver. If you are running a QMTP server, reenable that too.)
 
-10. Read TEST.receive.
+10. Read TEST.receive.md.
 
 
 That's it! To report success:
-       % ( echo 'First M. Last'; cat `cat SYSDEPS` ) | mail djb-qst@cr.yp.to
+       % ( echo 'First M. Last'; cat `cat SYSDEPS.md` ) | mail djb-qst@cr.yp.to
 Replace First M. Last with your name.
 
 If you have questions about qmail, join the qmail mailing list; see

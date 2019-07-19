@@ -1,4 +1,4 @@
-VERSION
+VERSION.md
 systype
 hasshsgr.h
 hasnpbg1.h

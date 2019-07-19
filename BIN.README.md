@@ -12,7 +12,7 @@ To install:
 
 To set up qmail to receive and deliver mail, follow the instructions in
 /var/qmail/doc/fastforward/ALIASES, and then start at step 9 of
-/var/qmail/doc/INSTALL.
+/var/qmail/doc/INSTALL.md.
 
 Compilation environment: Oops, the package creator forgot to edit this!
 He's supposed to list his OS version, compiler version, hardware, and

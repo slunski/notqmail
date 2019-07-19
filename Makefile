@@ -301,8 +301,8 @@ exit.h auto_spawn.h
 	./compile chkspawn.c
 
 clean: \
-TARGETS
-	rm -f `cat TARGETS`
+TARGETS.md
+	rm -f `cat TARGETS.md`
 
 coe.o: \
 compile coe.c coe.h

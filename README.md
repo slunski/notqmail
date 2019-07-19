@@ -1,7 +1,7 @@
 netqmail 1.06
 20071130
 James Craig Burley claims copyright on the qmail-isoc patch. For
-more details, see COPYRIGHT.
+more details, see COPYRIGHT.md.
 
 Apart from James' copyrights, no other copyright is claimed by the
 distributors of netqmail for changes from qmail 1.03 to netqmail 1.05.
@@ -30,11 +30,11 @@ Wayne Marshall
 
 qmail is a secure, reliable, efficient, simple message transfer agent.
 It is meant as a replacement for the entire sendmail-binmail system on
-typical Internet-connected UNIX hosts. See BLURB, BLURB2, BLURB3, and
-BLURB4 for more detailed advertisements.
+typical Internet-connected UNIX hosts. See BLURB.md, BLURB2.md, BLURB3.md, and
+BLURB4.md for more detailed advertisements.
 
-INSTALL says how to set up and test qmail. If you're upgrading from a
-previous version, read UPGRADE instead.
+INSTALL.md says how to set up and test qmail. If you're upgrading from a
+previous version, read UPGRADE.md instead.
 
 See PIC.* for some ``end-to-end'' pictures of mail flowing through the
 qmail system.
@@ -44,8 +44,8 @@ and a pointer to the qmail mailing list.
 
 Other documentation: http://pobox.com/~djb/proto.html shows solutions to
 several Internet mail problems; many of these solutions are implemented
-in qmail. CHANGES and THANKS show how qmail has changed since it was
-first released. SECURITY, INTERNALS, THOUGHTS, and TODO record many of
+in qmail. CHANGES.md and THANKS.md show how qmail has changed since it was
+first released. SECURITY.md, INTERNALS.md, THOUGHTS.md, and TODO.md record many of
 the qmail design decisions.
 
 The rest of this file is a list of systypes where various versions of

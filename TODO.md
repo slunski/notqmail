@@ -18,6 +18,6 @@ use mess822 in qreceipt
 use mess822 in qbiff
 use mess822 in maildirwatch
 eliminate token822, headerbody, hfield
-replace INTERNALS and THOUGHTS with a real paper describing qmail
+replace INTERNALS.md and THOUGHTS.md with a real paper describing qmail
 handle IPv6
 rewrite everything from scratch

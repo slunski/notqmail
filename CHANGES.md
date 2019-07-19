@@ -1,3 +1,4 @@
+20190719 doc: give text files .md extensions.
 20190715 code: detect and prefer utmpx where available.
 20190708 code: use DESTDIR environment variable as root directory in install.
 20071130 version: netqmail 1.06
