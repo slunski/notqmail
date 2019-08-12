@@ -7,7 +7,6 @@
 #include "hier.h"
 
 extern void init_uidgid();
-extern void hier();
 
 #define FATAL "instcheck: fatal: "
 #define WARNING "instcheck: warning: "
@@ -107,5 +106,6 @@ void main()
 {
   init_uidgid();
   hier();
+  hier_queue();
   _exit(0);
 }

@@ -1,8 +1,3 @@
-#include "substdio.h"
-#include "strerr.h"
-#include "env.h"
-#include "error.h"
-#include "fifo.h"
 #include "hier.h"
 #include "open.h"
 #include "strerr.h"
@@ -10,7 +5,7 @@
 
 extern int fdsourcedir;
 
-#define FATAL "instpackage: fatal: "
+#define FATAL "instqueue: fatal: "
 
 void main()
 {
@@ -19,6 +14,6 @@ void main()
     strerr_die2sys(111,FATAL,"unable to open current directory: ");
 
   umask(077);
-  hier();
+  hier_queue();
   _exit(0);
 }

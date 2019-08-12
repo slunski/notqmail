@@ -6,5 +6,7 @@ extern void d();
 extern void p();
 extern void c();
 extern void z();
+extern void hier();
+extern void hier_queue();
 
 #endif

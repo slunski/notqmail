@@ -4,7 +4,6 @@
 #include "hier.h"
 
 extern void init_uidgid();
-extern void hier();
 
 #define FATAL "instchown: fatal: "
 
@@ -89,5 +88,6 @@ void main()
   umask(077);
   init_uidgid();
   hier();
+  hier_queue();
   _exit(0);
 }
