@@ -1,3 +1,5 @@
+#include <sys/types.h>
+#include <grp.h>
 #include "exit.h"
 void main()
 {
