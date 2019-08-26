@@ -406,3 +406,9 @@ envelopes.0
 forgeries.0
 setup
 qtmp.h
+caldate_fmjd.o
+caltime_utc.o
+leapsecs_init.o
+leapsecs_read.o
+leapsecs_sub.o
+tai_unpack.o

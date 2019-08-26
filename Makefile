@@ -262,6 +262,14 @@ byte_zero.o: \
 compile byte_zero.c byte.h
 	./compile byte_zero.c
 
+caldate_fmjd.o: \
+compile caldate_fmjd.c caldate.h
+	./compile caldate_fmjd.c
+
+caltime_utc.o: \
+compile caltime_utc.c caltime.h
+	./compile caltime_utc.c
+
 case.a: \
 makelib case_diffb.o case_diffs.o case_lowerb.o case_lowers.o \
 case_starts.o
@@ -422,11 +430,14 @@ warn-auto.sh datemail.sh conf-qmail conf-break conf-split
 	chmod 755 datemail
 
 datetime.a: \
-makelib datetime.o datetime_un.o
-	./makelib datetime.a datetime.o datetime_un.o
+makelib datetime.o datetime_un.o caltime_utc.o caldate_fmjd.o leapsecs_sub.o \
+leapsecs_init.o leapsecs_read.o tai_unpack.o
+	./makelib datetime.a datetime.o datetime_un.o caltime_utc.o \
+	caldate_fmjd.o leapsecs_sub.o leapsecs_init.o leapsecs_read.o \
+	tai_unpack.o
 
 datetime.o: \
-compile datetime.c datetime.h
+compile datetime.c datetime.h caltime.h tai.h uint64.h
 	./compile datetime.c
 
 datetime_un.o: \
@@ -853,6 +864,18 @@ forward preline condredirect bouncesaying except maildirmake \
 maildir2mbox maildirwatch qail elq pinq install instpackage instchown \
 instcheck home home+df proc proc+df binm1 binm1+df binm2 binm2+df \
 binm3 binm3+df
+
+leapsecs_init.o: \
+compile leapsecs_init.c leapsecs.h
+	./compile leapsecs_init.c
+
+leapsecs_read.o: \
+compile leapsecs_read.c leapsecs.h
+	./compile leapsecs_read.c
+
+leapsecs_sub.o: \
+compile leapsecs_sub.c leapsecs.h
+	./compile leapsecs_sub.c
 
 load: \
 make-load warn-auto.sh systype
@@ -2047,6 +2070,10 @@ systype: \
 find-systype trycpp.c
 	./find-systype > systype
 
+tai_unpack.o: \
+compile tai_unpack.c tai.h uint64.h
+	./compile tai_unpack.c
+
 tcp-env: \
 load tcp-env.o dns.o remoteinfo.o timeoutread.o timeoutwrite.o \
 timeoutconn.o ip.o ipalloc.o case.a ndelay.a sig.a env.a getopt.a \
@@ -2114,6 +2141,13 @@ tryulong32.c compile load uint32.h1 uint32.h2
 	./tryulong32 ) >/dev/null 2>&1 \
 	&& cat uint32.h2 || cat uint32.h1 ) > uint32.h
 	rm -f tryulong32.o tryulong32
+
+uint64.h: \
+tryulong64.c compile load uint64.h1 uint64.h2
+	( ( ./compile tryulong64.c && ./load tryulong64 && \
+	./tryulong64 ) >/dev/null 2>&1 \
+	&& cat uint64.h2 || cat uint64.h1 ) > uint64.h
+	rm -f tryulong64.o tryulong64
 
 wait.a: \
 makelib wait_pid.o wait_nohang.o
