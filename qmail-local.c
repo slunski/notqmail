@@ -42,20 +42,6 @@ void temp_slowlock()
 void temp_qmail(fn) char *fn;
 { strerr_die5x(111,"Unable to open ",fn,": ",error_str(errno),". (#4.3.0)"); }
 
-/* writes ulong u in hex to char *s, does not NULL-terminate */
-unsigned int fmt_xlong(s,u) char *s; unsigned long u;
-{
- unsigned int len; unsigned long q; unsigned long c;
- len = 1; q = u;
- while (q > 15) { ++len; q /= 16; }
- if (s)
-  {
-   s += len;
-   do { c = u & 15; *--s = (c > 9 ? 'a' - 10 : '0') + c; u /= 16; } while(u);
-  }
- return len;
-}
-
 int flagdoit;
 int flag99;
 
