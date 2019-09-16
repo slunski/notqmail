@@ -3,7 +3,6 @@
 #include <fcntl.h>
 #include <errno.h>
 extern int errno;
-#include "tai.h"
 #include "leapsecs.h"
 
 struct tai *leapsecs = 0;

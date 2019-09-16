@@ -5,18 +5,14 @@
 
 /* XXX: breaks tai encapsulation */
 
-void caltime_utc(ct,t,pwday,pyday)
-struct caltime *ct;
-struct tai *t;
-int *pwday;
-int *pyday;
+void caltime_utc(struct caltime *ct, const struct tai *t, int *pwday, int *pyday)
 {
   struct tai t2 = *t;
   uint64 u;
   int leap;
   long s;
 
-  /* XXX: check for overfow? */
+  /* XXX: check for overflow? */
 
   leap = leapsecs_sub(&t2);
   u = t2.x;
