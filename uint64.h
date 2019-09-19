@@ -1,11 +1,9 @@
-/* Public domain. */
-
 #ifndef UINT64_H
 #define UINT64_H
 
-/* sysdep: +ulong64 */
+#include <stdint.h>
 
-typedef unsigned long uint64;
+typedef uint64_t uint64;
 
 extern void uint64_pack(char *,uint64);
 extern void uint64_pack_big(char *,uint64);

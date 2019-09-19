@@ -2142,13 +2142,6 @@ tryulong32.c compile load uint32.h1 uint32.h2
 	&& cat uint32.h2 || cat uint32.h1 ) > uint32.h
 	rm -f tryulong32.o tryulong32
 
-uint64.h: \
-tryulong64.c compile load uint64.h1 uint64.h2
-	( ( ./compile tryulong64.c && ./load tryulong64 && \
-	./tryulong64 ) >/dev/null 2>&1 \
-	&& cat uint64.h2 || cat uint64.h1 ) > uint64.h
-	rm -f tryulong64.o tryulong64
-
 wait.a: \
 makelib wait_pid.o wait_nohang.o
 	./makelib wait.a wait_pid.o wait_nohang.o
