@@ -437,7 +437,7 @@ leapsecs_init.o leapsecs_read.o tai_unpack.o
 	tai_unpack.o
 
 datetime.o: \
-compile datetime.c datetime.h caltime.h tai.h uint64.h
+compile datetime.c datetime.h caltime.h tai.h
 	./compile datetime.c
 
 datetime_un.o: \
@@ -2071,7 +2071,7 @@ find-systype trycpp.c
 	./find-systype > systype
 
 tai_unpack.o: \
-compile tai_unpack.c tai.h uint64.h
+compile tai_unpack.c tai.h
 	./compile tai_unpack.c
 
 tcp-env: \

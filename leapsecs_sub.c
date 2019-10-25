@@ -8,7 +8,7 @@ extern int leapsecs_num;
 int leapsecs_sub(struct tai *t)
 {
   int i;
-  uint64 u;
+  uint64_t u;
   int s;
 
   if (leapsecs_init() == -1) return 0;
