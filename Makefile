@@ -507,7 +507,7 @@ dot-qmail.9 conf-qmail conf-break conf-spawn
 
 elq: \
 warn-auto.sh elq.sh conf-qmail conf-break conf-split
-	cat warn-auto.sh elq.sh \
+	cat warn-auto.sh deprecated.sh elq.sh \
 	| sed s}QMAIL}"`head -1 conf-qmail`"}g \
 	| sed s}BREAK}"`head -1 conf-break`"}g \
 	| sed s}SPLIT}"`head -1 conf-split`"}g \
@@ -1016,7 +1016,7 @@ it man
 
 pinq: \
 warn-auto.sh pinq.sh conf-qmail conf-break conf-split
-	cat warn-auto.sh pinq.sh \
+	cat warn-auto.sh deprecated.sh pinq.sh \
 	| sed s}QMAIL}"`head -1 conf-qmail`"}g \
 	| sed s}BREAK}"`head -1 conf-break`"}g \
 	| sed s}SPLIT}"`head -1 conf-split`"}g \
@@ -1074,7 +1074,7 @@ compile prot.c hasshsgr.h prot.h
 
 qail: \
 warn-auto.sh qail.sh conf-qmail conf-break conf-split
-	cat warn-auto.sh qail.sh \
+	cat warn-auto.sh deprecated.sh qail.sh \
 	| sed s}QMAIL}"`head -1 conf-qmail`"}g \
 	| sed s}BREAK}"`head -1 conf-break`"}g \
 	| sed s}SPLIT}"`head -1 conf-split`"}g \
@@ -1487,11 +1487,11 @@ tcpto.h readwrite.h timeoutconn.h timeoutread.h timeoutwrite.h
 
 qmail-rspawn: \
 load qmail-rspawn.o spawn.o tcpto_clean.o now.o coe.o sig.a open.a \
-seek.a lock.a wait.a fd.a stralloc.a alloc.a substdio.a error.a str.a \
+seek.a lock.a wait.a fd.a stralloc.a alloc.a substdio.a error.a env.a str.a \
 auto_qmail.o uid.o auto_userq.o auto_spawn.o
 	./load qmail-rspawn spawn.o tcpto_clean.o now.o coe.o \
 	sig.a open.a seek.a lock.a wait.a fd.a stralloc.a alloc.a \
-	auto_qmail.o uid.o auto_userq.o substdio.a error.a str.a \
+	auto_qmail.o uid.o auto_userq.o substdio.a error.a env.a str.a \
 	auto_spawn.o
 
 qmail-rspawn.0: \
@@ -1499,7 +1499,7 @@ qmail-rspawn.8
 	nroff -man qmail-rspawn.8 > qmail-rspawn.0
 
 qmail-rspawn.o: \
-compile qmail-rspawn.c fd.h wait.h substdio.h exit.h fork.h error.h \
+compile qmail-rspawn.c fd.h wait.h substdio.h exit.h fork.h error.h env.h \
 tcpto.h
 	./compile qmail-rspawn.c
 
@@ -1535,6 +1535,12 @@ scan.h case.h auto_qmail.h trigger.h newfield.h stralloc.h quote.h \
 qmail.h substdio.h qsutil.h prioq.h datetime.h gen_alloc.h constmap.h \
 fmtqfn.h readsubdir.h direntry.h
 	./compile qmail-send.c
+
+qmail-send.service: \
+qmail-send.service.in conf-qmail
+	cat qmail-send.service.in \
+	| sed s}QMAILHOME}"`head -1 conf-qmail`"}g \
+	> qmail-send.service
 
 qmail-showctl: \
 load qmail-showctl.o uid.o gid.o auto_usera.o auto_userd.o auto_userl.o \
@@ -2077,13 +2083,6 @@ compile triggerpull.c ndelay.h open.h triggerpull.h
 uid.o: \
 compile uid.c uidgid.h subfd.h substdio.h exit.h
 	./compile uid.c
-
-uint32.h: \
-tryulong32.c compile load uint32.h1 uint32.h2
-	( ( ./compile tryulong32.c && ./load tryulong32 && \
-	./tryulong32 ) >/dev/null 2>&1 \
-	&& cat uint32.h2 || cat uint32.h1 ) > uint32.h
-	rm -f tryulong32.o tryulong32
 
 wait.a: \
 makelib wait_pid.o wait_nohang.o

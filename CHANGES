@@ -1,3 +1,10 @@
+20191227 fixed possible overflow in alloc() with allocations close to 4GiB
+20191226 add missing return types to main()
+20190919 fix ipme with multiple addresses on the same interface on platforms
+         without sa_len
+20190904 code: use stdint.h to get the definition for uint32
+20190903 code: do not parse header recipients for "qmail-inject -a"
+20190826 code: if $QMAILREMOTE is set, it's invoked instead of qmail-remote.
 20190822 cleanup: remove unused dnsmxip.
 20190822 cleanup: remove unused dnscname.
 20190819 version: notqmail 1.07.
@@ -33,7 +40,8 @@
 20031027 code: qmail-smtpd identifies itself as netqmail
 20031027 code: if $QMAILQUEUE is set, it's invoked instead of qmail-queue
 20031024 code: changed errno from int to #include.
-20031024 code: fixed .qmail parsing bug.
+20031024 code: fixed .qmail parsing bug (accessing an array out of bounds)
+         that was discovered by Erik Sjölund <erik.sjolund@gmail.com>).
 20031024 code: recognize 0.0.0.0 as a local address.
 20031024 code: sendmail's -f flag now overrides environment variables.
 19980615 version: qmail 1.03.
