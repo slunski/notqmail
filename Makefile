@@ -320,14 +320,6 @@ check: \
 it man
 	./instcheck
 
-chkshsgr: \
-load chkshsgr.o
-	./load chkshsgr 
-
-chkshsgr.o: \
-compile chkshsgr.c exit.h
-	./compile chkshsgr.c
-
 chkspawn: \
 load chkspawn.o substdio.a error.a str.a fs.a auto_spawn.o
 	./load chkspawn substdio.a error.a str.a fs.a auto_spawn.o 
@@ -595,7 +587,7 @@ forward.0: \
 forward.1
 
 forward.o: \
-compile forward.c sig.h readwrite.h exit.h env.h qmail.h substdio.h \
+compile forward.c sig.h readwrite.h env.h qmail.h substdio.h \
 strerr.h substdio.h fmt.h
 	./compile forward.c
 
@@ -671,15 +663,6 @@ trysgprm.c compile load
 	2>&1 \
 	&& echo \#define HASSIGPROCMASK 1 || exit 0 ) > hassgprm.h
 	rm -f trysgprm.o trysgprm
-
-hasshsgr.h: \
-chkshsgr warn-shsgr tryshsgr.c compile load
-	./chkshsgr || ( cat warn-shsgr; exit 1 )
-	( ( ./compile tryshsgr.c \
-	&& ./load tryshsgr && ./tryshsgr ) >/dev/null 2>&1 \
-	&& echo \#define HASSHORTSETGROUPS 1 || exit 0 ) > \
-	hasshsgr.h
-	rm -f tryshsgr.o tryshsgr
 
 haswaitp.h: \
 trywaitp.c compile load
@@ -774,7 +757,7 @@ compile ip.c fmt.h scan.h ip.h
 
 ipalloc.o: \
 compile ipalloc.c alloc.h gen_allocdefs.h ip.h ipalloc.h ip.h \
-gen_alloc.h
+gen_alloc.h oflops.h error.h
 	./compile ipalloc.c
 
 ipme.o: \
@@ -878,7 +861,7 @@ maildirwatch.1
 
 maildirwatch.o: \
 compile maildirwatch.c getln.h substdio.h subfd.h substdio.h prioq.h \
-datetime.h gen_alloc.h stralloc.h gen_alloc.h str.h exit.h hfield.h \
+datetime.h gen_alloc.h stralloc.h gen_alloc.h str.h hfield.h \
 readwrite.h open.h headerbody.h maildir.h strerr.h
 	./compile maildirwatch.c
 
@@ -956,6 +939,13 @@ now.o: \
 compile now.c datetime.h now.h datetime.h
 	./compile now.c
 
+oflops.h: \
+chkbiofl.c compile load oflops_bi.h oflops_compat.h
+	 ( ( ./compile chkbiofl.c  && ./load chkbiofl && \
+	./chkbiofl ) >/dev/null 2>&1 \
+	&& cat oflops_bi.h || cat oflops_compat.h ) > oflops.h
+	rm -f chkbiofl.o chkbiofl
+
 open.a: \
 makelib open_append.o open_excl.o open_read.o open_trunc.o \
 open_write.o
@@ -1022,7 +1012,7 @@ substdio.h exit.h fork.h wait.h env.h sig.h error.h
 
 prioq.o: \
 compile prioq.c alloc.h gen_allocdefs.h prioq.h datetime.h \
-gen_alloc.h
+gen_alloc.h oflops.h error.h
 	./compile prioq.c
 
 proc: \
@@ -1040,7 +1030,7 @@ proc+df.sh conf-qmail
 	chmod 755 proc+df
 
 prot.o: \
-compile prot.c hasshsgr.h prot.h
+compile prot.c prot.h
 	./compile prot.c
 
 qail: \
@@ -1140,8 +1130,8 @@ qmail-inject.o: \
 compile qmail-inject.c sig.h substdio.h stralloc.h gen_alloc.h \
 subfd.h substdio.h sgetopt.h subgetopt.h getln.h alloc.h str.h fmt.h \
 hfield.h token822.h gen_alloc.h control.h env.h gen_alloc.h \
-gen_allocdefs.h error.h qmail.h substdio.h now.h datetime.h exit.h \
-quote.h headerbody.h auto_qmail.h newfield.h stralloc.h constmap.h
+gen_allocdefs.h error.h qmail.h substdio.h now.h datetime.h error.h exit.h \
+quote.h headerbody.h auto_qmail.h newfield.h stralloc.h constmap.h oflops.h
 	./compile qmail-inject.c
 
 qmail-limits.0: \
@@ -1306,7 +1296,7 @@ qmail-pw2u.9 conf-qmail conf-break conf-spawn
 qmail-pw2u.o: \
 compile qmail-pw2u.c substdio.h readwrite.h subfd.h substdio.h \
 sgetopt.h subgetopt.h control.h constmap.h stralloc.h gen_alloc.h \
-fmt.h str.h scan.h open.h error.h getln.h auto_break.h auto_qmail.h \
+fmt.h str.h scan.h open.h error.h getln.h exit.h auto_break.h auto_qmail.h \
 auto_users.h byte.h
 	./compile qmail-pw2u.c
 
@@ -1359,7 +1349,7 @@ qmail-qmtpd.8
 qmail-qmtpd.o: \
 compile qmail-qmtpd.c stralloc.h gen_alloc.h substdio.h qmail.h \
 substdio.h now.h datetime.h str.h fmt.h env.h sig.h rcpthosts.h \
-auto_qmail.h readwrite.h control.h received.h
+auto_qmail.h readwrite.h control.h received.h exit.h
 	./compile qmail-qmtpd.c
 
 qmail-qread: \
@@ -1430,7 +1420,8 @@ compile qmail-remote.c sig.h stralloc.h gen_alloc.h substdio.h \
 subfd.h substdio.h scan.h case.h error.h auto_qmail.h control.h dns.h \
 alloc.h quote.h ip.h ipalloc.h ip.h gen_alloc.h ipme.h ip.h ipalloc.h \
 gen_alloc.h gen_allocdefs.h str.h now.h datetime.h exit.h constmap.h \
-tcpto.h readwrite.h timeoutconn.h timeoutread.h timeoutwrite.h
+tcpto.h readwrite.h timeoutconn.h timeoutread.h timeoutwrite.h oflops.h \
+error.h
 	./compile qmail-remote.c
 
 qmail-rspawn: \
@@ -1626,7 +1617,7 @@ qreceipt.o: \
 compile qreceipt.c sig.h env.h substdio.h stralloc.h gen_alloc.h \
 subfd.h substdio.h getln.h alloc.h str.h hfield.h token822.h \
 gen_alloc.h error.h gen_alloc.h gen_allocdefs.h headerbody.h exit.h \
-open.h quote.h qmail.h substdio.h
+open.h quote.h qmail.h substdio.h oflops.h error.h
 	./compile qreceipt.c
 
 qsmhook: \
@@ -1653,7 +1644,7 @@ tryutmpx.c compile load qtmp.h1 qtmp.h2
 	rm -f tryutmpx.o tryutmpx
 
 quote.o: \
-compile quote.c stralloc.h gen_alloc.h str.h quote.h
+compile quote.c stralloc.h gen_alloc.h str.h quote.h oflops.h error.h
 	./compile quote.c
 
 rcpthosts.o: \
@@ -1865,7 +1856,7 @@ compile stralloc_cat.c byte.h stralloc.h gen_alloc.h
 	./compile stralloc_cat.c
 
 stralloc_catb.o: \
-compile stralloc_catb.c stralloc.h gen_alloc.h byte.h
+compile stralloc_catb.c stralloc.h gen_alloc.h byte.h error.h oflops.h
 	./compile stralloc_catb.c
 
 stralloc_cats.o: \
@@ -1878,11 +1869,11 @@ compile stralloc_copy.c byte.h stralloc.h gen_alloc.h
 
 stralloc_eady.o: \
 compile stralloc_eady.c alloc.h stralloc.h gen_alloc.h \
-gen_allocdefs.h
+gen_allocdefs.h oflops.h error.h
 	./compile stralloc_eady.c
 
 stralloc_opyb.o: \
-compile stralloc_opyb.c stralloc.h gen_alloc.h byte.h
+compile stralloc_opyb.c stralloc.h gen_alloc.h byte.h error.h oflops.h
 	./compile stralloc_opyb.c
 
 stralloc_opys.o: \
@@ -1891,7 +1882,7 @@ compile stralloc_opys.c byte.h str.h stralloc.h gen_alloc.h
 
 stralloc_pend.o: \
 compile stralloc_pend.c alloc.h stralloc.h gen_alloc.h \
-gen_allocdefs.h
+gen_allocdefs.h oflops.h error.h
 	./compile stralloc_pend.c
 
 strerr.a: \
@@ -2007,7 +1998,7 @@ compile timeoutwrite.c timeoutwrite.h select.h error.h readwrite.h
 
 token822.o: \
 compile token822.c stralloc.h gen_alloc.h alloc.h str.h token822.h \
-gen_alloc.h gen_allocdefs.h
+gen_alloc.h gen_allocdefs.h oflops.h error.h
 	./compile token822.c
 
 trigger.o: \
